@@ -1,3 +1,14 @@
+/* ── Scroll Progress Bar ── */
+(function() {
+  const bar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = pct + '%';
+  }, { passive: true });
+})();
+
 /* ── Starfield Canvas ── */
 (function() {
   const canvas = document.getElementById('starfield');
@@ -38,16 +49,30 @@
     requestAnimationFrame(draw);
   }
 
-  // Parallax mouse movement
+  // Parallax mouse with depth
   document.addEventListener('mousemove', function(e) {
-    const mx = (e.clientX / w - 0.5) * 20;
-    const my = (e.clientY / h - 0.5) * 20;
+    const mx = (e.clientX / w - 0.5) * 30;
+    const my = (e.clientY / h - 0.5) * 30;
     canvas.style.transform = `translate(${mx}px, ${my}px)`;
   }, { passive: true });
 
   window.addEventListener('resize', resize);
   resize();
   draw();
+})();
+
+/* ── Hero Parallax ── */
+(function() {
+  const hero = document.querySelector('.hero-content');
+  if (!hero) return;
+
+  window.addEventListener('scroll', function() {
+    const scrollY = window.scrollY;
+    if (scrollY < window.innerHeight) {
+      hero.style.transform = `translateY(${scrollY * 0.3}px)`;
+      hero.style.opacity = 1 - (scrollY / window.innerHeight) * 0.8;
+    }
+  }, { passive: true });
 })();
 
 /* ── Scroll Animations ── */
@@ -57,17 +82,73 @@ const observer = new IntersectionObserver(function(entries) {
       entry.target.classList.add('visible');
     }
   }
-}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
 document.querySelectorAll('.anim-up, .anim-scale, .section-label').forEach(function(el) {
   observer.observe(el);
 });
 
-/* ── Glow orbs parallax ── */
+/* ── Stack items cascade reveal ── */
+(function() {
+  const stackItems = document.querySelectorAll('.stack-item');
+  const stackObserver = new IntersectionObserver(function(entries) {
+    let delay = 0;
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        setTimeout(function() {
+          entry.target.classList.add('visible');
+        }, delay);
+        delay += 60;
+      }
+    }
+  }, { threshold: 0.1 });
+
+  stackItems.forEach(function(item) {
+    item.classList.add('anim-scale');
+    stackObserver.observe(item);
+  });
+})();
+
+/* ── Glow orbs follow scroll with depth ── */
 window.addEventListener('scroll', function() {
   const scrollY = window.scrollY;
   const orb1 = document.querySelector('.glow-orb-1');
   const orb2 = document.querySelector('.glow-orb-2');
-  if (orb1) orb1.style.transform = `translateY(${scrollY * 0.15}px)`;
-  if (orb2) orb2.style.transform = `translateY(${-scrollY * 0.1}px)`;
+  if (orb1) orb1.style.transform = `translateY(${scrollY * 0.25}px) translateX(${-scrollY * 0.05}px)`;
+  if (orb2) orb2.style.transform = `translateY(${-scrollY * 0.2}px) translateX(${scrollY * 0.08}px)`;
 }, { passive: true });
+
+/* ── Smooth number counter for experience years ── */
+(function() {
+  const hero = document.querySelector('.hero-subtitle');
+  if (!hero) return;
+
+  const yearsObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      const el = entries[0].target;
+      const text = el.textContent;
+      // Highlight the years
+      el.innerHTML = text.replace(
+        '6 lety',
+        '<span style=\"background: linear-gradient(135deg, var(--accent), var(--accent-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;\">6 lety</span>'
+      );
+      yearsObs.unobserve(el);
+    }
+  }, { threshold: 0.5 });
+
+  yearsObs.observe(hero);
+})();
+
+/* ── Section divider glow on scroll ── */
+(function() {
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver(function(entries) {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.style.transition = 'box-shadow 0.8s ease';
+      }
+    }
+  }, { threshold: 0.3 });
+
+  sections.forEach(function(s) { observer.observe(s); });
+})();

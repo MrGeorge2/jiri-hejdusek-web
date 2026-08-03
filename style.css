@@ -23,6 +23,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Progress Bar ── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+  z-index: 1000;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
 /* ── Starfield ── */
 #starfield {
   position: fixed;
