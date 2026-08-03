@@ -153,6 +153,22 @@ window.addEventListener('scroll', function() {
   sections.forEach(function(s) { observer.observe(s); });
 })();
 
+/* ── Scroll hint: "Scroll" → "Konec" ── */
+(function() {
+  const label = document.getElementById('scroll-label');
+  if (!label) return;
+
+  window.addEventListener('scroll', function() {
+    const scrollBottom = window.scrollY + window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    if (docHeight - scrollBottom < 120) {
+      label.textContent = 'Konec';
+    } else {
+      label.textContent = 'Scroll';
+    }
+  }, { passive: true });
+})();
+
 /* ── Timeline dots positioning & active state ── */
 (function() {
   const dots = document.querySelectorAll('.timeline-dot');
