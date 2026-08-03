@@ -63,5 +63,6 @@ jobs:
           SCRIPT_AFTER: |
             cd /home/ubuntu/web
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u MrGeorge2 --password-stdin 2>/dev/null || true
+            docker compose down --remove-orphans 2>/dev/null || true
             docker compose pull
             docker compose up -d
