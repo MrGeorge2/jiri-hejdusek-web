@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Deploy
 
 on:
   push:
@@ -33,3 +33,26 @@ jobs:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/mrgeorge2/jiri-hejdusek-web:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to server via rsync
+        uses: easingthemes/ssh-deploy@v5
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          REMOTE_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+          TARGET: ${{ secrets.DEPLOY_PATH || '/home/ubuntu/web' }}
+          SOURCE: ""
+          ARGS: "-rlgoDzvc --delete --exclude='.git' --exclude='.github' --exclude='Dockerfile' --exclude='README.md' --exclude='LICENSE'"
+          SCRIPT_BEFORE: |
+            mkdir -p /home/ubuntu/web
+          SCRIPT_AFTER: |
+            sudo systemctl reload nginx || true
