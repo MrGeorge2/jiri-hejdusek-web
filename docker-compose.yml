@@ -1,0 +1,7 @@
+services:
+  web:
+    image: ghcr.io/mrgeorge2/jiri-hejdusek-web:latest
+    container_name: jiri-web
+    restart: always
+    ports:
+      - "80:80"
