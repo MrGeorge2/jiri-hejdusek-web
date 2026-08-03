@@ -152,3 +152,42 @@ window.addEventListener('scroll', function() {
 
   sections.forEach(function(s) { observer.observe(s); });
 })();
+
+/* ── Timeline dots positioning & active state ── */
+(function() {
+  const dots = document.querySelectorAll('.timeline-dot');
+  if (!dots.length) return;
+
+  function positionDots() {
+    const vh = window.innerHeight;
+    dots.forEach(function(dot) {
+      const sectionId = dot.getAttribute('data-section');
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + window.scrollY;
+        const posPct = (sectionTop / (document.documentElement.scrollHeight - vh)) * 100;
+        dot.style.top = Math.max(10, Math.min(90, posPct)) + '%';
+      }
+    });
+  }
+
+  const sectionObserver = new IntersectionObserver(function(entries) {
+    for (const entry of entries) {
+      const dot = document.querySelector(`[data-section="${entry.target.id}"]`);
+      if (!dot) continue;
+      if (entry.isIntersecting) {
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        dot.classList.add('active');
+      }
+    }
+  }, { threshold: 0.3, rootMargin: '-20% 0px -20% 0px' });
+
+  dots.forEach(function(dot) {
+    const section = document.getElementById(dot.getAttribute('data-section'));
+    if (section) sectionObserver.observe(section);
+  });
+
+  positionDots();
+  window.addEventListener('resize', positionDots);
+})();

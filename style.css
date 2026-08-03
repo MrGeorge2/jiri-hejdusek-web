@@ -23,6 +23,55 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Timeline Navigation ── */
+#timeline {
+  position: fixed;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  z-index: 100;
+  pointer-events: none;
+}
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(108,92,231,0.12);
+  transform: translateX(-0.5px);
+}
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(108,92,231,0.2);
+  border: 2px solid rgba(108,92,231,0.25);
+  transform: translate(-50%, -50%);
+  transition: all 0.4s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.timeline-dot:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(108,92,231,0.5);
+}
+.timeline-dot.active {
+  background: var(--accent);
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 20px rgba(108,92,231,0.6);
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 768px) {
+  #timeline { left: 16px; }
+}
+
 /* ── Progress Bar ── */
 #scroll-progress {
   position: fixed;
