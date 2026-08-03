@@ -5,481 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jiří Hejdušek — .NET vývojář</title>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #07070e;
-      --bg-card: #0d0d1a;
-      --text: #e4e4ec;
-      --text-muted: #8888a0;
-      --accent: #6c5ce7;
-      --accent-glow: #a78bfa;
-      --border: rgba(255,255,255,0.06);
-      --radius: 12px;
-      --radius-lg: 20px;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Geist', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── Canvas Starfield ── */
-    #starfield {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.7;
-    }
-
-    /* ── Layout ── */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 120px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* ── Section Labels ── */
-    .section-label {
-      font-family: 'Geist Mono', monospace;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .section-label.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 60px;
-    }
-    .hero-content { max-width: 700px; }
-
-    .hero-greeting {
-      font-family: 'Geist Mono', monospace;
-      font-size: 14px;
-      color: var(--accent);
-      margin-bottom: 20px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s 0.1s forwards;
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 7vw, 80px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.8s 0.2s forwards;
-    }
-    .hero h1 .accent {
-      background: linear-gradient(135deg, var(--accent), #a78bfa, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: var(--text-muted);
-      max-width: 520px;
-      margin-bottom: 40px;
-      font-weight: 400;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s 0.35s forwards;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s 0.5s forwards;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 60px;
-      font-family: 'Geist', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 0 30px rgba(108,92,231,0.35);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 45px rgba(108,92,231,0.5);
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover {
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.15);
-    }
-
-    .hero-scroll-hint {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-    .hero-scroll-hint span {
-      font-family: 'Geist Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.3); }
-    }
-
-    /* ── Animated Sections ── */
-    .anim-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .anim-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .anim-left {
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .anim-left.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .anim-right {
-      opacity: 0;
-      transform: translateX(40px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .anim-right.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .anim-scale {
-      opacity: 0;
-      transform: scale(0.92);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .anim-scale.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* ── Section Headers ── */
-    .section-header {
-      margin-bottom: 64px;
-    }
-    .section-header h2 {
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 12px;
-    }
-    .section-header p {
-      color: var(--text-muted);
-      font-size: 17px;
-      max-width: 500px;
-    }
-
-    /* ── Stack Grid ── */
-    .stack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-    }
-    .stack-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-align: center;
-      transition: all 0.3s ease;
-      cursor: default;
-    }
-    .stack-item:hover {
-      border-color: rgba(108,92,231,0.3);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(108,92,231,0.1);
-    }
-    .stack-icon {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-    .stack-name {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    .stack-level {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-family: 'Geist Mono', monospace;
-    }
-
-    /* ── Experience Cards ── */
-    .exp-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .exp-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 32px;
-      align-items: start;
-      transition: all 0.3s ease;
-    }
-    .exp-card:hover {
-      border-color: rgba(108,92,231,0.2);
-      box-shadow: 0 8px 32px rgba(108,92,231,0.06);
-    }
-    .exp-meta .exp-period {
-      font-family: 'Geist Mono', monospace;
-      font-size: 13px;
-      color: var(--accent);
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
-    .exp-meta .exp-company {
-      font-weight: 700;
-      font-size: 17px;
-    }
-    .exp-meta .exp-role {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-    .exp-detail h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .exp-detail p {
-      color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.7;
-    }
-    .exp-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 14px;
-    }
-    .exp-tag {
-      font-family: 'Geist Mono', monospace;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: rgba(108,92,231,0.1);
-      color: var(--accent-glow);
-      border: 1px solid rgba(108,92,231,0.15);
-    }
-
-    /* ── Offer Cards ── */
-    .offer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .offer-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 36px 28px;
-      transition: all 0.3s ease;
-    }
-    .offer-card:hover {
-      border-color: rgba(108,92,231,0.3);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(108,92,231,0.08);
-    }
-    .offer-icon {
-      font-size: 36px;
-      margin-bottom: 16px;
-    }
-    .offer-card h3 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .offer-card p {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    /* ── Contact ── */
-    .contact-section {
-      text-align: center;
-      padding-bottom: 160px;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 32px;
-    }
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 28px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 60px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 15px;
-      transition: all 0.3s ease;
-    }
-    .contact-link:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 24px rgba(108,92,231,0.2);
-      transform: translateY(-2px);
-    }
-    .contact-link .icon { font-size: 20px; }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 40px 24px;
-      color: var(--text-muted);
-      font-size: 13px;
-      border-top: 1px solid var(--border);
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Glow Orbs ── */
-    .glow-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.08;
-    }
-    .glow-orb-1 {
-      width: 600px; height: 600px;
-      background: var(--accent);
-      top: -200px; right: -200px;
-    }
-    .glow-orb-2 {
-      width: 500px; height: 500px;
-      background: #818cf8;
-      bottom: -200px; left: -200px;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      section { padding: 80px 20px; }
-      .exp-card {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 24px;
-      }
-      .stack-grid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 8px;
-      }
-      .hero h1 { font-size: 38px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-      #starfield { display: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Glow Orbs -->
   <div class="glow-orb glow-orb-1"></div>
   <div class="glow-orb glow-orb-2"></div>
-
-  <!-- Starfield Canvas -->
   <canvas id="starfield"></canvas>
 
-  <!-- ═══ HERO ═══ -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <p class="hero-greeting">👋 Dobrý den, jsem</p>
+      <p class="hero-greeting">Dobrý den, jsem</p>
       <h1>Jiří <span class="accent">Hejdušek</span></h1>
       <p class="hero-subtitle">
         .NET vývojář se 6 lety zkušeností z enterprise prostředí.
@@ -487,7 +24,7 @@
       </p>
       <div class="hero-cta">
         <a href="#contact" class="btn btn-primary">Napsat zprávu</a>
-        <a href="#stack" class="btn btn-ghost">Co umím ↓</a>
+        <a href="#stack" class="btn btn-ghost">Co umím</a>
       </div>
     </div>
     <div class="hero-scroll-hint">
@@ -496,7 +33,7 @@
     </div>
   </section>
 
-  <!-- ═══ STACK ═══ -->
+  <!-- STACK -->
   <section id="stack">
     <div class="container">
       <p class="section-label anim-up">Technologie</p>
@@ -517,48 +54,57 @@
     </div>
   </section>
 
-  <!-- ═══ ZKUŠENOSTI ═══ -->
+  <!-- ZKUŠENOSTI -->
   <section id="experience">
     <div class="container">
       <p class="section-label anim-up">Zkušenosti</p>
       <div class="section-header anim-up">
-        <h2>Kde jsem se učil řemeslo</h2>
-        <p>Od enterprise systémů po specializované bezpečnostní produkty.</p>
+        <h2>Kde jsem sbíral praxi</h2>
+        <p>Enterprise projekty pro velké klienty pod hlavičkou Favorlogic.</p>
       </div>
       <div class="exp-list">
+
         <div class="exp-card anim-up">
           <div class="exp-meta">
             <div class="exp-period">2021 — současnost</div>
-            <div class="exp-company">Škoda Digital</div>
+            <div class="exp-company">Favorlogic</div>
             <div class="exp-role">.NET Backend Developer</div>
           </div>
           <div class="exp-detail">
-            <h3>Enterprise backendy pro automobilový průmysl</h3>
-            <p>Návrh a vývoj škálovatelných backendových systémů na platformě .NET. Práce s vysokou zátěží, distribuovanými systémy a event-driven architekturou v prostředí, kde chyba není volba.</p>
+            <h3>Vývoj enterprise řešení pro přední klienty</h3>
+            <p>Jako vývojář ve Favorlogic jsem pracoval na klíčových projektech pro Škoda Digital, Safeboxes a Tesco SW. Backendové systémy, integrace, microservices a vše, co musí běžet spolehlivě.</p>
             <div class="exp-tags">
               <span class="exp-tag">.NET Core</span><span class="exp-tag">Kafka</span><span class="exp-tag">Postgres</span><span class="exp-tag">Docker</span><span class="exp-tag">Microservices</span>
             </div>
           </div>
         </div>
-        <div class="exp-card anim-up">
-          <div class="exp-meta">
-            <div class="exp-period">dříve</div>
-            <div class="exp-company">Safeboxes</div>
-            <div class="exp-role">Fullstack Developer</div>
+
+      </div>
+
+      <div class="clients-grid anim-up" style="margin-top: 40px;">
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-muted);">Klienti a projekty</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+          <div class="client-card">
+            <div class="client-logo">🚗</div>
+            <div class="client-name">Škoda Digital</div>
+            <div class="client-desc">Enterprise backendy pro automobilový průmysl. Distribuované systémy, event-driven architektura, vysoká zátěž.</div>
           </div>
-          <div class="exp-detail">
-            <h3>Bezpečnostní systémy a fullstack vývoj</h3>
-            <p>Vývoj zabezpečených webových aplikací od databáze po frontend. Důraz na bezpečnost, spolehlivost a čistou architekturu — systémy, které musí fungovat 24/7.</p>
-            <div class="exp-tags">
-              <span class="exp-tag">ASP.NET</span><span class="exp-tag">Blazor</span><span class="exp-tag">Redis</span><span class="exp-tag">SQL Server</span>
-            </div>
+          <div class="client-card">
+            <div class="client-logo">🔐</div>
+            <div class="client-name">Safeboxes</div>
+            <div class="client-desc">Zabezpečené webové aplikace. Fullstack vývoj od databáze po frontend s důrazem na spolehlivost.</div>
+          </div>
+          <div class="client-card">
+            <div class="client-logo">🛒</div>
+            <div class="client-name">Tesco SW</div>
+            <div class="client-desc">Vývoj softwarových řešení pro retail. Backend systémy a integrace v enterprise měřítku.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ SLUŽBY ═══ -->
+  <!-- SLUŽBY -->
   <section id="services">
     <div class="container">
       <p class="section-label anim-up">Služby</p>
@@ -569,29 +115,29 @@
       <div class="offer-grid">
         <div class="offer-card anim-scale" style="transition-delay: 0s">
           <div class="offer-icon">🏗</div>
-          <h3>Backend & API vývoj</h3>
+          <h3>Backend a API vývoj</h3>
           <p>REST API, microservices, event-driven systémy na .NET. Výkonné, testovatelné, dobře zdokumentované.</p>
         </div>
         <div class="offer-card anim-scale" style="transition-delay: 0.1s">
           <div class="offer-icon">🖥</div>
           <h3>Webové aplikace</h3>
-          <p>Moderní weby a aplikace v ASP.NET / Blazor. Rychlé, responzivní, napojené na váš backend.</p>
+          <p>Moderní weby a aplikace v ASP.NET a Blazor. Rychlé, responzivní, napojené na váš backend.</p>
         </div>
         <div class="offer-card anim-scale" style="transition-delay: 0.2s">
           <div class="offer-icon">🔄</div>
-          <h3>Redesign & modernizace</h3>
+          <h3>Redesign a modernizace</h3>
           <p>Máte starý web nebo systém? Přepíšu ho do moderního stacku, který se bude dát rozvíjet.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ KONTAKT ═══ -->
+  <!-- KONTAKT -->
   <section id="contact" class="contact-section">
     <div class="container">
       <p class="section-label anim-up">Kontakt</p>
       <div class="section-header anim-up">
-        <h2>Dejme si kávu — virtuálně</h2>
+        <h2>Ozvi se</h2>
         <p>Napište mi, co potřebujete. Nabídky a odhady jsou zdarma, bez závazků.</p>
       </div>
       <div class="contact-links anim-up">
@@ -606,83 +152,9 @@
   </section>
 
   <footer>
-    Jiří Hejdušek — .NET vývojář &copy; 2026
+    Jiří Hejdušek, .NET vývojář
   </footer>
 
-  <script>
-    /* ── Starfield Canvas ── */
-    (function() {
-      const canvas = document.getElementById('starfield');
-      const ctx = canvas.getContext('2d');
-      let stars = [];
-      let w, h;
-
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-        initStars();
-      }
-
-      function initStars() {
-        const count = Math.floor((w * h) / 1800);
-        stars = [];
-        for (let i = 0; i < count; i++) {
-          stars.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            r: Math.random() * 1.4 + 0.3,
-            speed: Math.random() * 0.15 + 0.03,
-            opacity: Math.random() * 0.7 + 0.3,
-          });
-        }
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, w, h);
-        for (const s of stars) {
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(180,170,255,${s.opacity})`;
-          ctx.fill();
-          s.y += s.speed;
-          if (s.y > h + 5) { s.y = -5; s.x = Math.random() * w; }
-        }
-        requestAnimationFrame(draw);
-      }
-
-      // Parallax — subtle movement on mouse
-      document.addEventListener('mousemove', (e) => {
-        const mx = (e.clientX / w - 0.5) * 20;
-        const my = (e.clientY / h - 0.5) * 20;
-        canvas.style.transform = `translate(${mx}px, ${my}px)`;
-      }, { passive: true });
-
-      window.addEventListener('resize', resize);
-      resize();
-      draw();
-    })();
-
-    /* ── Scroll Animations ── */
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      }
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.anim-up, .anim-left, .anim-right, .anim-scale, .section-label').forEach(el => {
-      observer.observe(el);
-    });
-
-    /* ── Glow orb follows scroll ── */
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const orb1 = document.querySelector('.glow-orb-1');
-      const orb2 = document.querySelector('.glow-orb-2');
-      if (orb1) orb1.style.transform = `translateY(${scrollY * 0.15}px)`;
-      if (orb2) orb2.style.transform = `translateY(${-scrollY * 0.1}px)`;
-    }, { passive: true });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
