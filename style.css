@@ -554,3 +554,44 @@ footer {
   }
   #starfield { display: none; }
 }
+
+/* ── Cookie Consent: dark theme ── */
+#cc-main {
+  --cc-font-family: 'Geist', system-ui, sans-serif;
+  --cc-bg: #0d0d1a;
+  --cc-primary-color: #e4e4ec;
+  --cc-secondary-color: #8888a0;
+  --cc-btn-primary-bg: #6c5ce7;
+  --cc-btn-primary-color: #fff;
+  --cc-btn-primary-hover-bg: #7c6df7;
+  --cc-btn-secondary-bg: rgba(108,92,231,0.12);
+  --cc-btn-secondary-color: #e4e4ec;
+  --cc-btn-secondary-hover-bg: rgba(108,92,231,0.2);
+  --cc-btn-border-radius: 8px;
+  --cc-modal-border-radius: 16px;
+  --cc-overlay-bg: rgba(0,0,0,0.65);
+  --cc-toggle-bg-off: #333;
+  --cc-toggle-bg-on: #6c5ce7;
+  --cc-toggle-bg-readonly: #444;
+  --cc-toggle-knob-bg: #fff;
+  --cc-toggle-knob-icon-color: #333;
+  --cc-cookie-category-block-bg: rgba(255,255,255,0.03);
+  --cc-cookie-category-block-bg-hover: rgba(255,255,255,0.05);
+  --cc-section-border: rgba(255,255,255,0.06);
+  --cc-cookie-table-border: rgba(255,255,255,0.06);
+  --cc-webkit-scrollbar-bg: #0d0d1a;
+  --cc-webkit-scrollbar-bg-hover: #1a1a2e;
+}
+
+#cc-main .cm__title,
+#cc-main .pm__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+#cc-main .cm__desc,
+#cc-main .pm__desc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--cc-secondary-color);
+}
