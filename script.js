@@ -145,7 +145,7 @@ function detectLanguage() {
   return 'en';
 }
 
-function t(key, lang) {
+function i18n_t(key, lang) {
   if (lang === 'cs') return null; // default text in HTML
   var dict = TRANSLATIONS[lang];
   return dict && dict[key] ? dict[key] : null;
@@ -171,7 +171,7 @@ function applyTranslations(lang) {
   for (var i = 0; i < elements.length; i++) {
     var el = elements[i];
     var key = el.getAttribute('data-i18n');
-    var text = t(key, lang);
+    var text = i18n_t(key, lang);
     if (text) {
       el.textContent = text;
     }
@@ -182,7 +182,7 @@ function applyTranslations(lang) {
   for (var j = 0; j < htmlElements.length; j++) {
     var hel = htmlElements[j];
     var hkey = hel.getAttribute('data-i18n-html');
-    var htext = t(hkey, lang);
+    var htext = i18n_t(hkey, lang);
     if (htext) {
       hel.innerHTML = htext;
     }
@@ -193,7 +193,7 @@ function applyTranslations(lang) {
   for (var k = 0; k < dots.length; k++) {
     var section = dots[k].getAttribute('data-section');
     var ariaKey = 'nav_' + section;
-    var ariaText = t(ariaKey, lang);
+    var ariaText = i18n_t(ariaKey, lang);
     if (ariaText) {
       dots[k].setAttribute('aria-label', ariaText);
     }
@@ -390,9 +390,9 @@ window.addEventListener('scroll', function() {
     var scrollBottom = window.scrollY + window.innerHeight;
     var docHeight = document.documentElement.scrollHeight;
     if (docHeight - scrollBottom < 120) {
-      label.textContent = t('end', currentLang) || 'Konec';
+      label.textContent = i18n_t('end', currentLang) || 'Konec';
     } else {
-      label.textContent = t('scroll', currentLang) || 'Scroll';
+      label.textContent = i18n_t('scroll', currentLang) || 'Scroll';
     }
   }, { passive: true });
 })();
