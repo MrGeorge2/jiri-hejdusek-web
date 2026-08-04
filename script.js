@@ -156,6 +156,7 @@ function applyTranslations(lang) {
 
   // Save original texts on first run
   if (!applyTranslations._origSaved) {
+    applyTranslations._origTitle = 'Jiří Hejdušek — .NET vývojář';
     var elements = document.querySelectorAll('[data-i18n]');
     for (var i = 0; i < elements.length; i++) {
       elements[i].setAttribute('data-i18n-orig', elements[i].textContent);
@@ -168,7 +169,6 @@ function applyTranslations(lang) {
     for (var k = 0; k < dots.length; k++) {
       dots[k].setAttribute('aria-label-orig', dots[k].getAttribute('aria-label'));
     }
-    applyTranslations._origTitle = document.title;
     applyTranslations._origSaved = true;
   }
 
