@@ -412,8 +412,10 @@ section {
 /* ── Offer Cards ── */
 .offer-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  max-width: 960px;
+  margin: 0 auto;
 }
 .offer-card {
   background: var(--bg-card);
@@ -523,6 +525,45 @@ footer {
   bottom: -200px; left: -200px;
 }
 
+/* ── Language Switcher ── */
+.lang-switcher {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  z-index: 1000;
+  display: flex;
+  gap: 2px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 3px;
+}
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.05em;
+}
+.lang-btn:hover {
+  color: var(--text);
+  background: rgba(108,92,231,0.1);
+}
+.lang-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .lang-switcher { right: 16px; top: 14px; }
+  .lang-btn { font-size: 11px; padding: 5px 10px; }
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   section { padding: 80px 20px; }
@@ -553,6 +594,12 @@ footer {
   .section-header h2 { font-size: 26px; }
   .exp-tags { gap: 4px; }
   .exp-tag { font-size: 10px; padding: 3px 8px; }
+}
+
+@media (max-width: 960px) {
+  .offer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {

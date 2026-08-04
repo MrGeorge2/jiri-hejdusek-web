@@ -218,7 +218,18 @@ function applyTranslations(lang) {
   }
 }
 
-var currentLang = detectLanguage();
+var currentLang = localStorage.getItem('lang') || detectLanguage();
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  applyTranslations(lang);
+  // Update active button
+  var buttons = document.querySelectorAll('.lang-btn');
+  for (var b = 0; b < buttons.length; b++) {
+    buttons[b].classList.toggle('active', buttons[b].getAttribute('data-lang') === lang);
+  }
+}
 
 // Apply immediately before DOMContentLoaded for title
 if (currentLang !== 'cs') {
@@ -230,6 +241,15 @@ if (currentLang !== 'cs') {
 
 document.addEventListener('DOMContentLoaded', function() {
   applyTranslations(currentLang);
+
+  // Language switcher buttons
+  var buttons = document.querySelectorAll('.lang-btn');
+  for (var b = 0; b < buttons.length; b++) {
+    buttons[b].classList.toggle('active', buttons[b].getAttribute('data-lang') === currentLang);
+    buttons[b].addEventListener('click', function() {
+      setLang(this.getAttribute('data-lang'));
+    });
+  }
 });
 
 /* ═══════════════════════════════════════════════════════
