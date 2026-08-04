@@ -232,7 +232,6 @@
 
       document.getElementById('cookie-decline').onclick = function() {
         localStorage.setItem('cookie-consent', 'declined');
-        gtag('consent', 'update', { 'analytics_storage': 'denied' });
         banner.style.display = 'none';
       };
     })();
