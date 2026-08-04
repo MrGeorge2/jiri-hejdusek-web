@@ -7,9 +7,16 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236c5ce7'/><text x='16' y='22' font-family='system-ui' font-weight='800' font-size='18' fill='white' text-anchor='middle'>JH</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.1/dist/cookieconsent.css">
 </head>
 <body>
+
+  <div id="cookie-banner">
+    <p>Tento web používá cookies pro analýzu návštěvnosti.</p>
+    <div class="cookie-btns">
+      <button id="cookie-accept">OK</button>
+      <button id="cookie-decline">Odmítnout</button>
+    </div>
+  </div>
 
   <div id="scroll-progress"></div>
 
@@ -197,89 +204,38 @@
 
   <script src="script.js"></script>
 
-  <!-- Google Analytics s Consent Mode -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEM7997FDD"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-
-    // Default: vše denied (GDPR)
     gtag('consent', 'default', {
-      'analytics_storage': 'denied',
+      'analytics_storage': 'granted',
       'ad_storage': 'denied',
       'ad_user_data': 'denied',
       'ad_personalization': 'denied'
     });
-
     gtag('js', new Date());
     gtag('config', 'G-YEM7997FDD');
   </script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEM7997FDD"></script>
 
-  <!-- Cookie Consent -->
-  <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.1/dist/cookieconsent.umd.js"></script>
   <script>
-    CookieConsent.run({
-      categories: {
-        necessary: { enabled: true, readOnly: true },
-        analytics: { enabled: false, readOnly: false }
-      },
-      language: {
-        default: 'cs',
-        translations: {
-          cs: {
-            consentModal: {
-              title: 'Tento web používá cookies',
-              description: 'Používám analytické cookies, abych věděl, jak web funguje a co zlepšit. Žádná data neprodávám ani nesdílím.',
-              acceptAllBtn: 'Přijmout vše',
-              acceptNecessaryBtn: 'Jen nezbytné',
-              showPreferencesBtn: 'Nastavení'
-            },
-            preferencesModal: {
-              title: 'Nastavení cookies',
-              acceptAllBtn: 'Přijmout vše',
-              acceptNecessaryBtn: 'Jen nezbytné',
-              savePreferencesBtn: 'Uložit nastavení',
-              sections: [
-                {
-                  title: 'Nezbytné cookies',
-                  description: 'Nutné pro fungování webu. Nelze vypnout.',
-                  linkedCategory: 'necessary'
-                },
-                {
-                  title: 'Analytické cookies',
-                  description: 'Google Analytics — anonymní statistiky návštěvnosti, které mi pomáhají web zlepšovat.',
-                  linkedCategory: 'analytics'
-                }
-              ]
-            }
-          }
-        }
-      },
-      guiOptions: {
-        consentModal: {
-          layout: 'cloud inline',
-          position: 'bottom center',
-          flipButtons: false
-        },
-        preferencesModal: {
-          layout: 'box',
-          position: 'right',
-          flipButtons: false
-        }
-      },
-      onConsent: function(cookie) {
-        if (cookie.categories.includes('analytics')) {
-          gtag('consent', 'update', { 'analytics_storage': 'granted' });
-        }
-      },
-      onChange: function(cookie) {
-        if (cookie.categories.includes('analytics')) {
-          gtag('consent', 'update', { 'analytics_storage': 'granted' });
-        } else {
-          gtag('consent', 'update', { 'analytics_storage': 'denied' });
-        }
-      }
-    });
+    (function() {
+      var banner = document.getElementById('cookie-banner');
+      if (localStorage.getItem('cookie-consent') !== null) return;
+
+      banner.style.display = 'flex';
+
+      document.getElementById('cookie-accept').onclick = function() {
+        localStorage.setItem('cookie-consent', 'accepted');
+        banner.style.display = 'none';
+      };
+
+      document.getElementById('cookie-decline').onclick = function() {
+        localStorage.setItem('cookie-consent', 'declined');
+        gtag('consent', 'update', { 'analytics_storage': 'denied' });
+        banner.style.display = 'none';
+      };
+    })();
   </script>
 </body>
 </html>
