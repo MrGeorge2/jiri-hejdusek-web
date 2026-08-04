@@ -35,15 +35,15 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <p class="hero-greeting">Dobrý den, jsem</p>
+      <p class="hero-greeting" data-i18n="greeting">Dobrý den, jsem</p>
       <h1>Jiří <span class="accent">Hejdušek</span></h1>
-      <p class="hero-subtitle">
+      <p class="hero-subtitle" data-i18n="subtitle">
         .NET vývojář se 6 lety zkušeností z enterprise prostředí.
         Stavím škálovatelné backendy, webové aplikace a systémy, které drží.
       </p>
       <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary">Napsat zprávu</a>
-        <a href="#stack" class="btn btn-ghost">Co umím</a>
+        <a href="#contact" class="btn btn-primary" data-i18n="cta_contact">Napsat zprávu</a>
+        <a href="#stack" class="btn btn-ghost" data-i18n="cta_stack">Co umím</a>
       </div>
     </div>
     <div class="hero-scroll-hint">
@@ -55,10 +55,10 @@
   <!-- STACK -->
   <section id="stack">
     <div class="container">
-      <p class="section-label anim-up">Technologie</p>
+      <p class="section-label anim-up" data-i18n="section_tech">Technologie</p>
       <div class="section-header anim-up">
-        <h2>Stack, ve kterém se pohybuju</h2>
-        <p>6 let zkušeností napříč enterprise ekosystémem Microsoftu i mimo něj.</p>
+        <h2 data-i18n="stack_title">Stack, ve kterém se pohybuju</h2>
+        <p data-i18n="stack_subtitle">6 let zkušeností napříč enterprise ekosystémem Microsoftu i mimo něj.</p>
       </div>
       <div class="stack-grid">
         <div class="stack-item anim-scale" style="transition-delay: 0s"><div class="stack-icon">🤖</div><div class="stack-name">AI / LLM</div><div class="stack-level">Expert</div></div>
@@ -78,22 +78,22 @@
   <!-- ZKUŠENOSTI -->
   <section id="experience">
     <div class="container">
-      <p class="section-label anim-up">Zkušenosti</p>
+      <p class="section-label anim-up" data-i18n="section_experience">Zkušenosti</p>
       <div class="section-header anim-up">
-        <h2>Kde jsem se učil řemeslo</h2>
-        <p>Enterprise projekty pro přední klienty.</p>
+        <h2 data-i18n="exp_title">Kde jsem se učil řemeslo</h2>
+        <p data-i18n="exp_subtitle">Enterprise projekty pro přední klienty.</p>
       </div>
       <div class="exp-list">
 
         <div class="exp-card anim-up">
           <div class="exp-meta">
-            <div class="exp-period">2021 — současnost</div>
+            <div class="exp-period" data-i18n="exp_favorlogic_period">2021 — současnost</div>
             <div class="exp-company">Favorlogic</div>
             <div class="exp-role">.NET Backend Developer</div>
           </div>
           <div class="exp-detail">
-            <h3>Vývoj enterprise řešení pro přední klienty</h3>
-            <p>Jako vývojář ve Favorlogic jsem pracoval na klíčových projektech pro Škoda Digital a Safeboxes. Backendové systémy, integrace, microservices a vše, co musí běžet spolehlivě.</p>
+            <h3 data-i18n="exp_favorlogic_title">Vývoj enterprise řešení pro přední klienty</h3>
+            <p data-i18n="exp_favorlogic_desc">Jako vývojář ve Favorlogic jsem pracoval na klíčových projektech pro Škoda Digital a Safeboxes. Backendové systémy, integrace, microservices a vše, co musí běžet spolehlivě.</p>
             <div class="exp-tags">
               <span class="exp-tag">.NET Core</span><span class="exp-tag">Kafka</span><span class="exp-tag">Postgres</span><span class="exp-tag">Docker</span><span class="exp-tag">Microservices</span>
             </div>
@@ -102,13 +102,13 @@
 
         <div class="exp-card anim-up">
           <div class="exp-meta">
-            <div class="exp-period">2019 — 2021</div>
+            <div class="exp-period" data-i18n="exp_tesco_period">2019 — 2021</div>
             <div class="exp-company">Tesco SW</div>
             <div class="exp-role">.NET Developer</div>
           </div>
           <div class="exp-detail">
-            <h3>Vývoj softwarových řešení pro retail</h3>
-            <p>Backend systémy a integrace v enterprise měřítku pro jednoho z největších retailových hráčů.</p>
+            <h3 data-i18n="exp_tesco_title">Vývoj softwarových řešení pro retail</h3>
+            <p data-i18n="exp_tesco_desc">Backend systémy a integrace v enterprise měřítku pro jednoho z největších retailových hráčů.</p>
             <div class="exp-tags">
               <span class="exp-tag">.NET</span><span class="exp-tag">SQL Server</span><span class="exp-tag">Azure</span>
             </div>
@@ -118,33 +118,33 @@
       </div>
 
       <div class="clients-grid anim-up" style="margin-top: 28px;">
-        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-muted);">Projekty — Tesco SW</h3>
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-muted);" data-i18n="projects_tesco_heading">Projekty — Tesco SW</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
           <div class="client-card">
             <div class="client-logo">🏢</div>
-            <div class="client-name">FaMa+</div>
-            <div class="client-desc">Facility Management systém pro správu budov, údržby a provozu napříč retailovou sítí. Plánování, reporting a správa aktiv.</div>
+            <div class="client-name" data-i18n="fama_name">FaMa+</div>
+            <div class="client-desc" data-i18n="fama_desc">Facility Management systém pro správu budov, údržby a provozu napříč retailovou sítí. Plánování, reporting a správa aktiv.</div>
           </div>
           <div class="client-card">
             <div class="client-logo">🏬</div>
-            <div class="client-name">Portál nájemníka</div>
-            <div class="client-desc">Samooobslužný portál pro nájemce obchodních prostor. Smlouvy, fakturace, hlášení závad a komunikace se správou areálu.</div>
+            <div class="client-name" data-i18n="portal_name">Portál nájemníka</div>
+            <div class="client-desc" data-i18n="portal_desc">Samooobslužný portál pro nájemce obchodních prostor. Smlouvy, fakturace, hlášení závad a komunikace se správou areálu.</div>
           </div>
         </div>
       </div>
 
       <div class="clients-grid anim-up" style="margin-top: 40px;">
-        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-muted);">Projekty — Favorlogic</h3>
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-muted);" data-i18n="projects_favorlogic_heading">Projekty — Favorlogic</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
           <div class="client-card">
             <div class="client-logo">🚄</div>
-            <div class="client-name">Škoda Digital</div>
-            <div class="client-desc">Enterprise backendy pro kolejová vozidla. Distribuované systémy, event-driven architektura, vysoká zátěž.</div>
+            <div class="client-name" data-i18n="skoda_name">Škoda Digital</div>
+            <div class="client-desc" data-i18n="skoda_desc">Enterprise backendy pro kolejová vozidla. Distribuované systémy, event-driven architektura, vysoká zátěž.</div>
           </div>
           <div class="client-card">
             <div class="client-logo">🔐</div>
-            <div class="client-name">Safeboxes</div>
-            <div class="client-desc">Zabezpečené webové aplikace. Fullstack vývoj od databáze po frontend s důrazem na spolehlivost.</div>
+            <div class="client-name" data-i18n="safeboxes_name">Safeboxes</div>
+            <div class="client-desc" data-i18n="safeboxes_desc">Zabezpečené webové aplikace. Fullstack vývoj od databáze po frontend s důrazem na spolehlivost.</div>
           </div>
         </div>
       </div>
@@ -154,36 +154,36 @@
   <!-- SLUŽBY -->
   <section id="services">
     <div class="container">
-      <p class="section-label anim-up">Služby</p>
+      <p class="section-label anim-up" data-i18n="section_services">Služby</p>
       <div class="section-header anim-up">
-        <h2>Co pro vás můžu udělat</h2>
-        <p>Zakázky do jednoho měsíce, kompletně remote. Bez agenturních nesmyslů.</p>
+        <h2 data-i18n="services_title">Co pro vás můžu udělat</h2>
+        <p data-i18n="services_subtitle">Zakázky do jednoho měsíce, kompletně remote. Bez agenturních nesmyslů.</p>
       </div>
       <div class="offer-grid">
         <div class="offer-card anim-scale" style="transition-delay: 0s">
           <div class="offer-icon">🤖</div>
-          <h3>Osobní AI asistenti</h3>
-          <p>Nastavím vám vlastního AI asistenta na míru — odpovídá na emaily, třídí data, hlídá termíny. Váš digitální parťák, který pracuje 24/7.</p>
+          <h3 data-i18n="offer_ai_title">Osobní AI asistenti</h3>
+          <p data-i18n="offer_ai_desc">Nastavím vám vlastního AI asistenta na míru — odpovídá na emaily, třídí data, hlídá termíny. Váš digitální parťák, který pracuje 24/7.</p>
         </div>
         <div class="offer-card anim-scale" style="transition-delay: 0.1s">
           <div class="offer-icon">🏗</div>
-          <h3>Backend a API vývoj</h3>
-          <p>REST API, microservices, event-driven systémy na .NET. Výkonné, testovatelné, dobře zdokumentované.</p>
+          <h3 data-i18n="offer_backend_title">Backend a API vývoj</h3>
+          <p data-i18n="offer_backend_desc">REST API, microservices, event-driven systémy na .NET. Výkonné, testovatelné, dobře zdokumentované.</p>
         </div>
         <div class="offer-card anim-scale" style="transition-delay: 0.2s">
           <div class="offer-icon">🖥</div>
-          <h3>Webové aplikace</h3>
-          <p>Moderní weby a aplikace v ASP.NET a Blazor. Rychlé, responzivní, napojené na váš backend.</p>
+          <h3 data-i18n="offer_web_title">Webové aplikace</h3>
+          <p data-i18n="offer_web_desc">Moderní weby a aplikace v ASP.NET a Blazor. Rychlé, responzivní, napojené na váš backend.</p>
         </div>
         <div class="offer-card anim-scale" style="transition-delay: 0.3s">
           <div class="offer-icon">🔄</div>
-          <h3>Redesign a modernizace</h3>
-          <p>Máte starý web nebo systém? Přepíšu ho do moderního stacku, který se bude dát rozvíjet.</p>
+          <h3 data-i18n="offer_redesign_title">Redesign a modernizace</h3>
+          <p data-i18n="offer_redesign_desc">Máte starý web nebo systém? Přepíšu ho do moderního stacku, který se bude dát rozvíjet.</p>
         </div>
         <div class="offer-card anim-scale" style="transition-delay: 0.4s">
           <div class="offer-icon">🧠</div>
-          <h3>AI a automatizace</h3>
-          <p>Chytré chatboty, vyhledávání v dokumentech, automatizace rutinních procesů. AI nástroje na míru, které šetří čas a peníze.</p>
+          <h3 data-i18n="offer_automation_title">AI a automatizace</h3>
+          <p data-i18n="offer_automation_desc">Chytré chatboty, vyhledávání v dokumentech, automatizace rutinních procesů. AI nástroje na míru, které šetří čas a peníze.</p>
         </div>
       </div>
     </div>
@@ -192,25 +192,25 @@
   <!-- KONTAKT -->
   <section id="contact" class="contact-section">
     <div class="container">
-      <p class="section-label anim-up">Kontakt</p>
+      <p class="section-label anim-up" data-i18n="section_contact">Kontakt</p>
       <div class="section-header anim-up">
-        <h2>Dejme si kávu</h2>
-        <p>Napište mi, co potřebujete. Nabídky a odhady jsou zdarma, bez závazků.</p>
+        <h2 data-i18n="contact_title">Dejme si kávu</h2>
+        <p data-i18n="contact_subtitle">Napište mi, co potřebujete. Nabídky a odhady jsou zdarma, bez závazků.</p>
       </div>
       <div class="contact-links anim-up">
         <a href="mailto:jiri@hejdusek.com" class="contact-link">
-          <span class="icon">✉</span> jiri@hejdusek.com
+          <span class="icon">✉</span> <span data-i18n="contact_email">jiri@hejdusek.com</span>
         </a>
         <a href="https://cz.linkedin.com/in/jirihejdusek" target="_blank" rel="noopener" class="contact-link">
-          <span class="icon">🔗</span> LinkedIn
+          <span class="icon">🔗</span> <span data-i18n="contact_linkedin">LinkedIn</span>
         </a>
       </div>
     </div>
   </section>
 
   <footer>
-    © 2026 Jiří Hejdušek
-    <div class="footer-info">
+    <span data-i18n="footer">© 2026 Jiří Hejdušek</span>
+    <div class="footer-info" data-i18n-html="footer_info">
       IČO 14253518 &nbsp;|&nbsp; Slatinická 261, 783 49 Lutín<br>
       Podnikatel zapsaný v živnostenském rejstříku.
     </div>
@@ -242,16 +242,46 @@
               acceptNecessaryBtn: 'Jen nezbytné',
               savePreferencesBtn: 'Uložit nastavení',
               sections: [
-                {
-                  title: 'Nezbytné cookies',
-                  description: 'Nutné pro fungování webu. Nelze vypnout.',
-                  linkedCategory: 'necessary'
-                },
-                {
-                  title: 'Analytické cookies',
-                  description: 'Google Analytics — anonymní statistiky návštěvnosti.',
-                  linkedCategory: 'analytics'
-                }
+                { title: 'Nezbytné cookies', description: 'Nutné pro fungování webu. Nelze vypnout.', linkedCategory: 'necessary' },
+                { title: 'Analytické cookies', description: 'Google Analytics — anonymní statistiky návštěvnosti.', linkedCategory: 'analytics' }
+              ]
+            }
+          },
+          en: {
+            consentModal: {
+              title: 'This website uses cookies',
+              description: 'I use analytics cookies to understand how the site performs and what to improve. I don\'t sell or share any data.',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Essential only',
+              showPreferencesBtn: 'Settings'
+            },
+            preferencesModal: {
+              title: 'Cookie settings',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Essential only',
+              savePreferencesBtn: 'Save settings',
+              sections: [
+                { title: 'Essential cookies', description: 'Required for the website to function. Cannot be disabled.', linkedCategory: 'necessary' },
+                { title: 'Analytics cookies', description: 'Google Analytics — anonymous visitor statistics.', linkedCategory: 'analytics' }
+              ]
+            }
+          },
+          de: {
+            consentModal: {
+              title: 'Diese Website verwendet Cookies',
+              description: 'Ich verwende Analyse-Cookies, um zu verstehen, wie die Website funktioniert und was verbessert werden kann. Ich verkaufe oder teile keine Daten.',
+              acceptAllBtn: 'Alle akzeptieren',
+              acceptNecessaryBtn: 'Nur notwendige',
+              showPreferencesBtn: 'Einstellungen'
+            },
+            preferencesModal: {
+              title: 'Cookie-Einstellungen',
+              acceptAllBtn: 'Alle akzeptieren',
+              acceptNecessaryBtn: 'Nur notwendige',
+              savePreferencesBtn: 'Einstellungen speichern',
+              sections: [
+                { title: 'Notwendige Cookies', description: 'Für den Betrieb der Website erforderlich. Können nicht deaktiviert werden.', linkedCategory: 'necessary' },
+                { title: 'Analyse-Cookies', description: 'Google Analytics — anonyme Besucherstatistiken.', linkedCategory: 'analytics' }
               ]
             }
           }
