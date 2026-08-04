@@ -15,6 +15,11 @@ function getYears() {
 var TRANSLATIONS = {
   en: {
     title: "Jiří Hejdušek — .NET Developer",
+    description: "Jiří Hejdušek — .NET developer with {years} years of enterprise experience. I build scalable backends, web apps and systems. Offering custom development, AI solutions and consulting.",
+    og_title: "Jiří Hejdušek — .NET Developer",
+    og_description: "Jiří Hejdušek — .NET developer with {years} years of experience. Backends, web apps, AI solutions. Enterprise projects for Škoda Digital and more.",
+    twitter_title: "Jiří Hejdušek — .NET Developer",
+    twitter_description: ".NET developer with {years} years of experience. Backends, web apps, AI.",
     greeting: "Hello, I am",
     subtitle: ".NET developer with {years} years of enterprise experience. I build scalable backends, web applications, and systems that last.",
     cta_contact: "Send a message",
@@ -81,6 +86,11 @@ var TRANSLATIONS = {
   },
   de: {
     title: "Jiří Hejdušek — .NET-Entwickler",
+    description: "Jiří Hejdušek — .NET-Entwickler mit {years} Jahren Enterprise-Erfahrung. Ich baue skalierbare Backends, Webanwendungen und Systeme. Biete individuelle Entwicklung, KI-Lösungen und Beratung.",
+    og_title: "Jiří Hejdušek — .NET-Entwickler",
+    og_description: "Jiří Hejdušek — .NET-Entwickler mit {years} Jahren Erfahrung. Backends, Webanwendungen, KI-Lösungen. Enterprise-Projekte für Škoda Digital u.a.",
+    twitter_title: "Jiří Hejdušek — .NET-Entwickler",
+    twitter_description: ".NET-Entwickler mit {years} Jahren Erfahrung. Backends, Web-Apps, KI.",
     greeting: "Guten Tag, ich bin",
     subtitle: ".NET-Entwickler mit {years} Jahren Erfahrung im Enterprise-Umfeld. Ich baue skalierbare Backends, Webanwendungen und Systeme, die halten.",
     cta_contact: "Nachricht senden",
@@ -239,9 +249,42 @@ function applyTranslations(lang) {
       yEl.innerHTML = yEl.innerHTML.replace('{years}', y);
     }
   }
+
+  // Replace {years} in meta tags
+  var metaElements = document.querySelectorAll('[data-i18n-meta]');
+  for (var mIdx = 0; mIdx < metaElements.length; mIdx++) {
+    var mEl = metaElements[mIdx];
+    var mKey = mEl.getAttribute('data-i18n-meta');
+    if (useOrig) {
+      mEl.setAttribute('content', mEl.getAttribute('data-meta-orig') || mEl.getAttribute('content'));
+    } else {
+      var mText = i18n_t(mKey, lang);
+      if (mText) {
+        if (!mEl.getAttribute('data-meta-orig')) {
+          mEl.setAttribute('data-meta-orig', mEl.getAttribute('content'));
+        }
+        mEl.setAttribute('content', mText.replace('{years}', y));
+      }
+    }
+  }
 }
 
-var currentLang = localStorage.getItem('lang') || detectLanguage();
+// Check query param ?lang= first, then localStorage, then browser detection
+function getQueryLang() {
+  var m = window.location.search.match(/[?&]lang=([a-z]{2})/);
+  return m ? m[1] : null;
+}
+
+var currentLang = getQueryLang() || localStorage.getItem('lang') || detectLanguage();
+
+// If set via query param, save to localStorage and clean URL
+if (getQueryLang() && getQueryLang() === currentLang) {
+  localStorage.setItem('lang', currentLang);
+  if (window.history && window.history.replaceState) {
+    var clean = window.location.pathname + window.location.search.replace(/[?&]lang=[a-z]{2}/, '').replace(/^\?$/, '').replace(/^&/, '?');
+    window.history.replaceState({}, '', clean || window.location.pathname);
+  }
+}
 
 function setLang(lang) {
   currentLang = lang;
