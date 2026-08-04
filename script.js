@@ -3,11 +3,20 @@
    cs/sk → čeština | de/de-* → němčina | ostatní → angličtina
    ═══════════════════════════════════════════════════════ */
 
+function getYears() {
+  var start = new Date(2020, 1, 1); // únor 2020
+  var now = new Date();
+  var years = now.getFullYear() - start.getFullYear();
+  var m = now.getMonth() - start.getMonth();
+  if (m < 0) { years--; }
+  return years;
+}
+
 var TRANSLATIONS = {
   en: {
     title: "Jiří Hejdušek — .NET Developer",
     greeting: "Hello, I am",
-    subtitle: ".NET developer with 6 years of enterprise experience. I build scalable backends, web applications, and systems that last.",
+    subtitle: ".NET developer with {years} years of enterprise experience. I build scalable backends, web applications, and systems that last.",
     cta_contact: "Send a message",
     cta_stack: "What I can do",
     scroll: "Scroll",
@@ -73,7 +82,7 @@ var TRANSLATIONS = {
   de: {
     title: "Jiří Hejdušek — .NET-Entwickler",
     greeting: "Guten Tag, ich bin",
-    subtitle: ".NET-Entwickler mit 6 Jahren Erfahrung im Enterprise-Umfeld. Ich baue skalierbare Backends, Webanwendungen und Systeme, die halten.",
+    subtitle: ".NET-Entwickler mit {years} Jahren Erfahrung im Enterprise-Umfeld. Ich baue skalierbare Backends, Webanwendungen und Systeme, die halten.",
     cta_contact: "Nachricht senden",
     cta_stack: "Was ich kann",
     scroll: "Scrollen",
@@ -214,6 +223,20 @@ function applyTranslations(lang) {
       var ariaKey = 'nav_' + section;
       var ariaText = i18n_t(ariaKey, lang);
       if (ariaText) dots2[k2].setAttribute('aria-label', ariaText);
+    }
+  }
+
+  // Replace {years} placeholder with actual years
+  var yearsElements = document.querySelectorAll('[data-i18n-years]');
+  var y = getYears();
+  for (var yIdx = 0; yIdx < yearsElements.length; yIdx++) {
+    var yEl = yearsElements[yIdx];
+    if (useOrig) {
+      yEl.textContent = yEl.getAttribute('data-i18n-orig').replace('{years}', y);
+      yEl.innerHTML = yEl.getAttribute('data-i18n-orig').replace('{years}', y);
+    } else {
+      yEl.textContent = yEl.textContent.replace('{years}', y);
+      yEl.innerHTML = yEl.innerHTML.replace('{years}', y);
     }
   }
 }
@@ -386,17 +409,19 @@ window.addEventListener('scroll', function() {
   var yearsObs = new IntersectionObserver(function(entries) {
     if (entries[0].isIntersecting) {
       var el = entries[0].target;
+      var y = getYears();
+      var highlight = '<span style="background: linear-gradient(135deg, var(--accent), var(--accent-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">';
       el.innerHTML = el.innerHTML.replace(
-        '6 lety',
-        '<span style="background: linear-gradient(135deg, var(--accent), var(--accent-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">6 lety</span>'
+        y + ' lety',
+        highlight + y + ' lety</span>'
       );
       el.innerHTML = el.innerHTML.replace(
-        '6 years',
-        '<span style="background: linear-gradient(135deg, var(--accent), var(--accent-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">6 years</span>'
+        y + ' years',
+        highlight + y + ' years</span>'
       );
       el.innerHTML = el.innerHTML.replace(
-        '6 Jahren',
-        '<span style="background: linear-gradient(135deg, var(--accent), var(--accent-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">6 Jahren</span>'
+        y + ' Jahren',
+        highlight + y + ' Jahren</span>'
       );
       yearsObs.unobserve(el);
     }
