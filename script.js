@@ -14,8 +14,8 @@ function getYears() {
 
 var TRANSLATIONS = {
   en: {
-    title: "Jiří Hejdušek — .NET Developer",
-    description: "Jiří Hejdušek — .NET developer with {years} years of enterprise experience. I build scalable backends, web apps and systems. Offering custom development, AI solutions and consulting.",
+    title: "Jiří Hejdušek — .NET Developer | Backend, AI, Web Apps",
+    description: "Jiří Hejdušek — .NET developer with {years} years of experience. Backends, web apps and custom AI solutions. Enterprise projects for Škoda Digital.",
     og_title: "Jiří Hejdušek — .NET Developer",
     og_description: "Jiří Hejdušek — .NET developer with {years} years of experience. Backends, web apps, AI solutions. Enterprise projects for Škoda Digital and more.",
     twitter_title: "Jiří Hejdušek — .NET Developer",
@@ -85,8 +85,8 @@ var TRANSLATIONS = {
     nav_contact: "Contact"
   },
   de: {
-    title: "Jiří Hejdušek — .NET-Entwickler",
-    description: "Jiří Hejdušek — .NET-Entwickler mit {years} Jahren Enterprise-Erfahrung. Ich baue skalierbare Backends, Webanwendungen und Systeme. Biete individuelle Entwicklung, KI-Lösungen und Beratung.",
+    title: "Jiří Hejdušek — .NET-Entwickler | Backend, KI, Web-Apps",
+    description: "Jiří Hejdušek — .NET-Entwickler mit {years} Jahren Erfahrung. Backends, Web-Apps und KI-Lösungen. Enterprise-Projekte für Škoda Digital.",
     og_title: "Jiří Hejdušek — .NET-Entwickler",
     og_description: "Jiří Hejdušek — .NET-Entwickler mit {years} Jahren Erfahrung. Backends, Webanwendungen, KI-Lösungen. Enterprise-Projekte für Škoda Digital u.a.",
     twitter_title: "Jiří Hejdušek — .NET-Entwickler",
