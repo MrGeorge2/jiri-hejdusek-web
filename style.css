@@ -555,49 +555,30 @@ footer {
   #starfield { display: none; }
 }
 
-/* ── Cookie banner ── */
-#cookie-banner {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--bg-card);
-  border-top: 1px solid var(--border);
-  padding: 14px 24px;
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
+/* ── Cookie Consent: dark theme ── */
+#cc-main {
+  --cc-font-family: 'Geist', system-ui, sans-serif;
+  --cc-bg: #0d0d1a;
+  --cc-primary-color: #e4e4ec;
+  --cc-secondary-color: #8888a0;
+  --cc-btn-primary-bg: #6c5ce7;
+  --cc-btn-primary-color: #fff;
+  --cc-btn-primary-hover-bg: #7c6df7;
+  --cc-btn-secondary-bg: rgba(108,92,231,0.12);
+  --cc-btn-secondary-color: #e4e4ec;
+  --cc-btn-secondary-hover-bg: rgba(108,92,231,0.2);
+  --cc-btn-border-radius: 8px;
+  --cc-modal-border-radius: 16px;
+  --cc-overlay-bg: rgba(0,0,0,0.65);
+  --cc-toggle-bg-off: #333;
+  --cc-toggle-bg-on: #6c5ce7;
+  --cc-toggle-bg-readonly: #444;
+  --cc-toggle-knob-bg: #fff;
+  --cc-toggle-knob-icon-color: #333;
+  --cc-cookie-category-block-bg: rgba(255,255,255,0.03);
+  --cc-cookie-category-block-bg-hover: rgba(255,255,255,0.05);
+  --cc-section-border: rgba(255,255,255,0.06);
+  --cc-cookie-table-border: rgba(255,255,255,0.06);
+  --cc-webkit-scrollbar-bg: #0d0d1a;
+  --cc-webkit-scrollbar-bg-hover: #1a1a2e;
 }
-#cookie-banner p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
-.cookie-btns {
-  display: flex;
-  gap: 8px;
-}
-.cookie-btns button {
-  padding: 7px 18px;
-  border-radius: 8px;
-  font-size: 0.825rem;
-  font-family: inherit;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  transition: all 0.15s;
-}
-#cookie-accept {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-#cookie-accept:hover { background: #7c6df7; }
-#cookie-decline {
-  background: transparent;
-  color: var(--text-muted);
-}
-#cookie-decline:hover { color: var(--text); background: rgba(255,255,255,0.04); }
