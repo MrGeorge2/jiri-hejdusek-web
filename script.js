@@ -152,50 +152,68 @@ function i18n_t(key, lang) {
 }
 
 function applyTranslations(lang) {
-  if (lang === 'cs') {
-    // Set HTML lang attribute
-    document.documentElement.lang = 'cs';
-    return;
-  }
-
   document.documentElement.lang = lang;
 
-  // Page title
-  var titleKey = 'title';
-  if (TRANSLATIONS[lang] && TRANSLATIONS[lang][titleKey]) {
-    document.title = TRANSLATIONS[lang][titleKey];
+  // Save original texts on first run
+  if (!applyTranslations._origSaved) {
+    var elements = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].setAttribute('data-i18n-orig', elements[i].textContent);
+    }
+    var htmlElements = document.querySelectorAll('[data-i18n-html]');
+    for (var j = 0; j < htmlElements.length; j++) {
+      htmlElements[j].setAttribute('data-i18n-html-orig', htmlElements[j].innerHTML);
+    }
+    var dots = document.querySelectorAll('.timeline-dot');
+    for (var k = 0; k < dots.length; k++) {
+      dots[k].setAttribute('aria-label-orig', dots[k].getAttribute('aria-label'));
+    }
+    applyTranslations._origTitle = document.title;
+    applyTranslations._origSaved = true;
   }
 
+  // Restore originals for CS, translate for others
+  var useOrig = (lang === 'cs');
+
+  // Page title
+  document.title = useOrig ? applyTranslations._origTitle : (TRANSLATIONS[lang] && TRANSLATIONS[lang].title ? TRANSLATIONS[lang].title : applyTranslations._origTitle);
+
   // All elements with data-i18n
-  var elements = document.querySelectorAll('[data-i18n]');
-  for (var i = 0; i < elements.length; i++) {
-    var el = elements[i];
-    var key = el.getAttribute('data-i18n');
-    var text = i18n_t(key, lang);
-    if (text) {
-      el.textContent = text;
+  var elements2 = document.querySelectorAll('[data-i18n]');
+  for (var i2 = 0; i2 < elements2.length; i2++) {
+    var el = elements2[i2];
+    if (useOrig) {
+      el.textContent = el.getAttribute('data-i18n-orig');
+    } else {
+      var key = el.getAttribute('data-i18n');
+      var text = i18n_t(key, lang);
+      if (text) el.textContent = text;
     }
   }
 
-  // Elements with data-i18n-html (for HTML content like footer_info)
-  var htmlElements = document.querySelectorAll('[data-i18n-html]');
-  for (var j = 0; j < htmlElements.length; j++) {
-    var hel = htmlElements[j];
-    var hkey = hel.getAttribute('data-i18n-html');
-    var htext = i18n_t(hkey, lang);
-    if (htext) {
-      hel.innerHTML = htext;
+  // Elements with data-i18n-html
+  var htmlElements2 = document.querySelectorAll('[data-i18n-html]');
+  for (var j2 = 0; j2 < htmlElements2.length; j2++) {
+    var hel = htmlElements2[j2];
+    if (useOrig) {
+      hel.innerHTML = hel.getAttribute('data-i18n-html-orig');
+    } else {
+      var hkey = hel.getAttribute('data-i18n-html');
+      var htext = i18n_t(hkey, lang);
+      if (htext) hel.innerHTML = htext;
     }
   }
 
   // aria-labels on nav dots
-  var dots = document.querySelectorAll('.timeline-dot');
-  for (var k = 0; k < dots.length; k++) {
-    var section = dots[k].getAttribute('data-section');
-    var ariaKey = 'nav_' + section;
-    var ariaText = i18n_t(ariaKey, lang);
-    if (ariaText) {
-      dots[k].setAttribute('aria-label', ariaText);
+  var dots2 = document.querySelectorAll('.timeline-dot');
+  for (var k2 = 0; k2 < dots2.length; k2++) {
+    if (useOrig) {
+      dots2[k2].setAttribute('aria-label', dots2[k2].getAttribute('aria-label-orig'));
+    } else {
+      var section = dots2[k2].getAttribute('data-section');
+      var ariaKey = 'nav_' + section;
+      var ariaText = i18n_t(ariaKey, lang);
+      if (ariaText) dots2[k2].setAttribute('aria-label', ariaText);
     }
   }
 }
